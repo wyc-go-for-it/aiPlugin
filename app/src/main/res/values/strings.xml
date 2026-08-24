@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">AI插件</string>
+    <string name="cancel">取消</string>
+    <string name="back">返回</string>
+    <string name="OK">确定</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+    <string name="not_support_feature">暂不支持此功能</string>
+    <string name="use_ai">AI识别</string>
+    <string name="bind_store">绑定门店</string>
+    <string name="submit_rect">提交标定参数</string>
+    <string name="ai_rest">恢复出厂设置</string>
+    <string name="balance_ai_setting">佰伦斯AI称设置</string>
+    <string name="weighingHints">当前启用了连续称重功能，请先在称上放置选择商品</string>
+    <string name="weighingDelHints">删除数量不一致，请重新选择商品</string>
+    <string name="pickWeighingHints">请先在称上取下对应的的商品</string>
+</resources>

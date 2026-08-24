@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/appColor</color>
+    <color name="colorPrimaryDark">@color/appColor</color>
+    <color name="colorAccent">@color/appColor</color>
+    <color name="appColor">@color/lightBlue</color><!--3F3F55-->
+    <color name="lightBlue">#67B0F8</color>
+    <color name="blue">#FF0080ff</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="pink">#FFF88C9F</color>
+    <color name="black_trans">#1A717171</color>
+    <color name="gray_subtransparent">#4DA1A1A1</color>
+    <color name="theme_cyan">#33cabb</color>
+    <color name="text_color">#FF494848</color>
+    <color name="blue_subtransparent">#881883F7</color>
+    <color name="disabled_gray">#EDEAE8E8</color>
+</resources>

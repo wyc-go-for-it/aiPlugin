@@ -1,0 +1,165 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.jetbrains.kotlin.android)
+
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.wyc.hzaiplugin'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.wyc.hzaiplugin"
+        minSdk 24
+        targetSdk 30
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+
+        ndk{
+            abiFilters  'armeabi-v7a'
+        }
+    }
+
+    final Properties props = new Properties()
+    props.load(new FileInputStream(file("signing.properties")))
+    signingConfigs {
+        release{
+            keyAlias props['KEY_ALIAS']
+            keyPassword props['KEY_PASSWORD']
+            storeFile file(props['KEYSTORE_FILE'])
+            storePassword props['KEYSTORE_PASSWORD']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+
+            lintOptions {
+                checkReleaseBuilds true
+                abortOnError true
+
+                ignore 'ExpiredTargetSdkVersion'
+            }
+
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            signingConfig signingConfigs.release
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        aidl = true
+    }
+
+    dataBinding{
+        android.buildFeatures.dataBinding = true
+    }
+
+    buildFeatures {
+        compose true
+        viewBinding true
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.5.1'
+    }
+    packaging {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+
+    packagingOptions{
+        pickFirsts +=['lib/armeabi-v7a/libc++_shared.so','lib/armeabi-v7a/librknnrt.so']
+    }
+
+    configurations {
+        configureEach {
+            exclude group: 'com.blankj', module: 'utilcode'
+            exclude group: 'com.fasterxml.jackson.core', module: 'jackson-core'
+        }
+    }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                outputFileName = "hz_ai_sdk.apk"
+                if (variant.buildType.name == 'release') {
+                    variant.assembleProvider.get().doLast {
+                        copy {
+                            duplicatesStrategy = 'include'
+                            include '**/*.apk'
+                            from variant.getPackageApplicationProvider().get().outputDirectory.getAsFile().get().getPath() + File.separator
+                            into "${projectDir}/release"
+                            rename { String fileName ->outputFileName}
+                        }
+                    }
+                }
+            }
+    }
+
+}
+
+dependencies {
+
+    implementation libs.androidx.activity.ktx
+    implementation libs.androidx.appcompat
+    implementation libs.androidx.constraintlayout
+    implementation libs.androidx.core.ktx
+    implementation libs.androidx.lifecycle.runtime.ktx
+    implementation libs.androidx.activity.compose
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.graphics
+    implementation libs.androidx.ui.tooling.preview
+    implementation libs.androidx.material3
+    implementation libs.material
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit
+    androidTestImplementation libs.androidx.espresso.core
+    androidTestImplementation platform(libs.androidx.compose.bom)
+    androidTestImplementation libs.androidx.ui.test.junit4
+    debugImplementation libs.androidx.ui.tooling
+    debugImplementation libs.androidx.ui.test.manifest
+
+    implementation 'com.jakewharton:butterknife:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    implementation 'com.alibaba:fastjson:1.2.84'
+
+    //六小象
+    def sanqn_version = "2.0.1.1"
+    implementation "com.sanqn.ai:bom:$sanqn_version-jdk8"
+    implementation "com.sanqn.ai:ui:$sanqn_version-jdk8"
+
+    //佰伦斯
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation files('libs/balance.aar')
+
+    //由由
+    implementation('yoyo-sdk:yoyo:4.1.0.5') {
+        exclude module: 'support-v4'
+        exclude group: 'com.hp.hpl.sparta'
+    }
+}

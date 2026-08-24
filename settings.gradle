@@ -1,0 +1,39 @@
+pluginManagement {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+
+        google {
+            content {
+                includeGroupByRegex("com\\.android.*")
+                includeGroupByRegex("com\\.google.*")
+                includeGroupByRegex("androidx.*")
+            }
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+
+        google()
+        mavenCentral()
+
+        maven { url 'https://jitpack.io' }
+        maven { url "http://nexus.yoyo.link/repository/YoyoAndroidSdk/"
+            allowInsecureProtocol  true}//配置由由的maven
+
+        maven { url "http://nexus3.sixelp.com:3001/repository/AndroidSDK/"
+            allowInsecureProtocol  true}
+    }
+}
+
+rootProject.name = "hzaiplugin"
+include ':app'

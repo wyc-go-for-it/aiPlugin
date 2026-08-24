@@ -1,0 +1,65 @@
+<!-- activity_scale_settings.xml 核心结构片段 -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- 1. 实时称重大屏卡片 -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#1E1E1E"/>
+
+    <!-- 2. 参数设置表单 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Ai设备"
+            android:textColor="@color/text_color"
+            android:textSize="@dimen/font_size_24" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_68"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/ai_device"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:foreground="@drawable/spinner_style"
+                android:popupElevation="@dimen/font_size_16" />
+
+            <Button
+                android:id="@+id/ai_setting"
+                android:layout_width="@dimen/width_108"
+                android:layout_height="match_parent"
+                android:text="设置"
+                android:textSize="@dimen/font_size_16" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="保存" />
+
+        <Button
+            android:id="@+id/btn_exit"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="退出" />
+    </LinearLayout>
+</LinearLayout>

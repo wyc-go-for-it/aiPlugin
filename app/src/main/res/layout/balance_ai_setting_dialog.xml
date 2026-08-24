@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/hint_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_45"
+        android:layout_marginTop="@dimen/margin_5"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:text="秤盘标定：滑动红框四边，使秤台全部位于红色长方形内"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        app:layout_constraintEnd_toStartOf="@id/submit_btn"
+        app:layout_constraintStart_toEndOf="@id/setting_layout"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/submit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_40"
+        android:gravity="center"
+        android:padding="@dimen/margin_5"
+        android:text="@string/submit_rect"
+        app:layout_constraintEnd_toStartOf="@id/rest"
+        app:layout_constraintStart_toEndOf="@id/hint_msg"
+        app:layout_constraintTop_toTopOf="@id/hint_msg" />
+
+    <Button
+        android:id="@+id/rest"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/height_40"
+        android:gravity="center"
+        android:padding="@dimen/margin_5"
+        android:text="@string/ai_rest"
+        app:layout_constraintEnd_toStartOf="@+id/re_take"
+        app:layout_constraintStart_toEndOf="@id/submit_btn"
+        app:layout_constraintTop_toTopOf="@id/hint_msg" />
+
+    <Button
+        android:id="@+id/re_take"
+        android:layout_width="@dimen/width_88"
+        android:layout_height="@dimen/height_40"
+        android:gravity="center"
+        android:padding="@dimen/margin_5"
+        android:text="重拍"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/submit_btn"
+        app:layout_constraintTop_toTopOf="@id/hint_msg" />
+
+    <LinearLayout
+        android:id="@+id/setting_layout"
+        android:layout_width="@dimen/width_208"
+        android:layout_height="0dp"
+        android:background="@drawable/right_gray_separator"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/ai_using"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/use_ai"
+            android:textSize="@dimen/font_size_16" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height_45"
+            android:orientation="horizontal"
+            android:paddingStart="@dimen/margin_5"
+            android:paddingEnd="@dimen/margin_5">
+
+            <EditText
+                android:id="@+id/store_code"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_5"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_with_gray_border_style"
+                android:ems="6"
+                android:hint="请输入门店编号"
+                android:inputType="textPersonName"
+                android:padding="@dimen/margin_5"
+                android:textSize="@dimen/font_size_16" />
+
+            <Button
+                android:id="@+id/bind_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="@dimen/margin_5"
+                android:text="@string/bind_store" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_device_info"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/top_separator"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_1"
+                android:background="@drawable/bottom_separator"
+                android:gravity="center"
+                android:text="AI设备信息"
+                android:textColor="@color/text_color"
+                android:textSize="@dimen/font_size_20" />
+
+            <TextView
+                android:id="@+id/tv_ai_sn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="AI设备序列号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_shop_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="门店编号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_shop_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="门店名称："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_shop_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="门店状态："
+                android:textColor="@color/black"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_ai_firmware_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="固件版本号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_sdk_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="SDK版本号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_model_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="模型版本号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_ai_config_version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="配置表版本号："
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/tv_scale_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:text="秤型号："
+                android:textColor="@color/black"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="960dp"
+        android:layout_height="540dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/margin_5"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/setting_layout"
+        app:layout_constraintTop_toBottomOf="@id/hint_msg">
+
+        <ImageView
+            android:id="@+id/iv_camera_shot"
+            android:layout_width="960dp"
+            android:layout_height="540dp" />
+
+        <com.wyc.hzaiplugin.ai.aiRecognizeInterface.MarkRectView
+            android:id="@+id/rect_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
