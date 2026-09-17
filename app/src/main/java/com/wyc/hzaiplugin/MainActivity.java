@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,10 +16,12 @@ import android.os.RemoteException;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +41,7 @@ import com.wyc.ai.AiGoods;
 import com.wyc.ai.IAiCallback;
 import com.wyc.ai.IAiService;
 import com.wyc.hzaiplugin.ai.aiRecognize.AIRecognizeImp;
+import com.wyc.hzaiplugin.ai.aiRecognize.LiuXXAi;
 import com.wyc.hzaiplugin.bean.AiSetting;
 import com.wyc.hzaiplugin.bean.TreeListItem;
 import com.wyc.hzaiplugin.service.AiService;
@@ -71,14 +75,24 @@ public class MainActivity extends AppCompatActivity {
      }
 
     private void initAiDevice(){
+        final ViewGroup camera_type_layout = findViewById(R.id.camera_type_layout);
+
         final Spinner ai_device = findViewById(R.id.ai_device) ;
         ArrayAdapter<String> aiDeviceAdapter = new ArrayAdapter<>(this, R.layout.drop_down_style);
         aiDeviceAdapter.setDropDownViewResource(R.layout.drop_down_style);
+
+        final List<TreeListItem> supportLst = AIRecognizeImp.support();
 
         ai_device.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mPosition = position;
+
+                if(LiuXXAi.class.getCanonicalName().equals(supportLst.get(position).getItem_id())){
+                    camera_type_layout.setVisibility(View.VISIBLE);
+                }else{
+                    camera_type_layout.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -87,8 +101,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        final List<TreeListItem> supportLst = AIRecognizeImp.support();
-
         for(TreeListItem value : supportLst){
             aiDeviceAdapter.add(value.getItem_name());
         }
@@ -96,8 +108,12 @@ public class MainActivity extends AppCompatActivity {
 
         final AiSetting setting = AiSetting.getInstance();
         for (int i = 0;i < supportLst.size();++i){
-            if (supportLst.get(i).getItem_id().equals(setting.getCls())){
+            final TreeListItem item = supportLst.get(i);
+            if (item.getItem_id().equals(setting.getCls())){
                 ai_device.setSelection(i);
+                if(LiuXXAi.class.getCanonicalName().equals(setting.getCls())){
+                    camera_type_layout.setVisibility(View.VISIBLE);
+                }
                 break;
             }
         }
@@ -105,6 +121,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void initSave(){
         final Button btn_save = findViewById(R.id.btn_save);
+
+        final RadioButton local = findViewById(R.id.local);
+        final RadioButton uvc = findViewById(R.id.uvc);
+
         btn_save.setOnClickListener(view -> {
             final AiSetting setting = new AiSetting();
 
@@ -119,7 +139,27 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "保存成功,请退出重进。", Toast.LENGTH_LONG).show();
                 }
             }
+
+            if(local != null && uvc != null){
+                final SharedPreferences preferences=getSharedPreferences("cameraInfo", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor= preferences.edit();
+
+                if(uvc.isChecked()){
+                    editor.putInt("cameraType", 0);
+                }else{
+                    editor.putInt("cameraType", 1);
+                }
+
+                editor.apply();
+            }
         });
+
+        final SharedPreferences preferences=getSharedPreferences("cameraInfo", Context.MODE_PRIVATE);
+        final int cameraType = preferences.getInt("cameraType",1);
+        if(cameraType == 0){
+            uvc.setChecked(true);
+        }
+
 
         final Button btn_exit = findViewById(R.id.btn_exit);
         btn_exit.setOnClickListener(view -> finish());

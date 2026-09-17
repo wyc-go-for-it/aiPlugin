@@ -128,6 +128,7 @@ public class LiuXXAi extends AIRecognizeImp {
         final SharedPreferences preferences= App.self().getSharedPreferences("cameraInfo", Context.MODE_PRIVATE);
         final int vid = preferences.getInt("vid",0);
         final int pid = preferences.getInt("pid",0);
+        final int cameraType = preferences.getInt("cameraType",0);
 
         Log.d("LiuXXAi",String.format(Locale.CHINA,"vid:%d,pid:%d",vid,pid));
 
@@ -135,11 +136,11 @@ public class LiuXXAi extends AIRecognizeImp {
         if(vid != 0 && pid != 0){
             final String id = preferences.getString("id","");
             final String name = preferences.getString("name","");
-            configuration = new Configuration.Builder().autoSwitchCamera(false)
+            configuration = new Configuration.Builder().cameraType(cameraType)
                     .cameraInfo(new CameraInfo(id,name,vid,pid)).miniRecogWeight(5)
                     .build();
         }else{
-            configuration = new Configuration.Builder()
+            configuration = new Configuration.Builder().cameraType(cameraType)
                     .build();
         }
         SanQNSDK.app().init().context(App.self())

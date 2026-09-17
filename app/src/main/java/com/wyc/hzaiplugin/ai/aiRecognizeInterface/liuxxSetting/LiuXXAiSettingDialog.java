@@ -70,12 +70,14 @@ public class LiuXXAiSettingDialog extends AbstractDialog {
             if (response.isSuccessful()) {
                 DeviceData deviceData = response.getData();
                 if(deviceData != null){
-                    tvSN.setText(deviceData.getSn());
-                    tvShopId.setText(deviceData.getShopCode());
-                    if(deviceData.getStatus() != null && deviceData.getStatus() == 1){
-                        status_name.setText("已激活");
-                    }
-                    shop_name_device.setText(deviceData.getShopName());
+                    tvSN.post(() -> {
+                        tvSN.setText(deviceData.getSn());
+                        tvShopId.setText(deviceData.getShopCode());
+                        if(deviceData.getStatus() != null && deviceData.getStatus() == 1){
+                            status_name.setText("已激活");
+                        }
+                        shop_name_device.setText(deviceData.getShopName());
+                    });
                 }
             } else {
                 ToastUtils.showShort("获取设备信息失败 code:" + response.getCode() + " message:" + response.getMessage());

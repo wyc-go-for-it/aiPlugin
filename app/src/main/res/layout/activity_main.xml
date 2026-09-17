@@ -48,6 +48,27 @@
                 android:textSize="@dimen/font_size_16" />
         </LinearLayout>
 
+        <RadioGroup
+            android:id="@+id/camera_type_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <RadioButton
+                android:id="@+id/local"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="原生相机" />
+
+            <RadioButton
+                android:id="@+id/uvc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="外接相机" />
+        </RadioGroup>
+
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
